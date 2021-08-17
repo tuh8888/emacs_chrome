@@ -634,6 +634,9 @@ When called interactively, use prefix arg to abort editing."
 	  (run-hooks 'edit-server-done-hook)
 	  (edit-server-send-response proc t nokill)
 	  (edit-server-log proc "sent response to browser")))
+      (when edit-server-frame
+	(delete-frame edit-server-frame))
+      ;; delete-frame may change the current buffer
       (unless nokill
         ;; don't run abort twice in a row.
         (remove-hook 'kill-buffer-hook 'edit-server-abort*)
